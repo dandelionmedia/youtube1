@@ -221,10 +221,177 @@ body.drawer-open{
   .sidebar-note{margin-top:11px!important;padding:10px!important;font-size:10.5px!important;line-height:1.45!important}
   .instructor-sidebar-card{margin-top:10px!important;transform:scale(.86);transform-origin:top center;width:116.3%!important;margin-left:-8.15%!important}
 }
+
+
+/* v7: TOC fully visible + sidebar/main hard separation */
+@media (min-width:1100px){
+  :root{--sidebar:310px}
+  .layout{
+    display:grid!important;
+    grid-template-columns:310px minmax(0,1fr)!important;
+    max-width:1600px!important;
+    margin:0 auto!important;
+    position:relative!important;
+    overflow:visible!important;
+  }
+  .sidebar{
+    position:fixed!important;
+    top:10px!important;
+    left:max(0px,calc((100vw - 1600px)/2))!important;
+    width:310px!important;
+    height:auto!important;
+    max-height:none!important;
+    padding:14px 16px 16px!important;
+    overflow:visible!important;
+    background:rgba(255,255,255,.97)!important;
+    border:1px solid var(--line)!important;
+    border-radius:0 16px 16px 0!important;
+    box-shadow:0 14px 34px rgba(18,21,27,.08)!important;
+    z-index:45!important;
+  }
+  .brand-mini{margin:0 4px 10px!important}
+  .brand-icon{width:32px!important;height:24px!important}
+  .brand-mini strong{font-size:14px!important}
+  .brand-mini small{font-size:10px!important;margin-top:1px!important}
+  .toc-label{margin:0 8px 5px!important;font-size:10px!important}
+  .toc{display:block!important;overflow:visible!important;max-height:none!important}
+  .toc a{
+    padding:6px 8px!important;
+    margin:1px 0!important;
+    min-height:30px!important;
+    font-size:12px!important;
+    line-height:1.28!important;
+    border-radius:9px!important;
+    white-space:normal!important;
+  }
+  .toc-num{min-width:20px!important;font-size:10px!important}
+  .main{
+    grid-column:2!important;
+    min-width:0!important;
+    width:auto!important;
+    padding-left:38px!important;
+    padding-right:38px!important;
+  }
+  .toolbar{
+    margin-left:-38px!important;
+    margin-right:-38px!important;
+    padding-left:38px!important;
+    padding-right:38px!important;
+  }
+  .lesson{max-width:1000px!important}
+  .instructor-sidebar-card{
+    margin:10px 0 0!important;
+    width:100%!important;
+    transform:none!important;
+  }
+  .instructor-sidebar-card > div:nth-child(2){padding:10px!important}
+  .instructor-sidebar-card td{padding-top:0!important;padding-bottom:0!important}
+  .instructor-sidebar-card img[width="83"]{width:62px!important;height:62px!important;border-width:3px!important}
+  .instructor-sidebar-card .instructor-sns-row img{width:21px!important;height:21px!important}
+}
+
+/* Shorter PC screens: keep all 8 TOC items visible without sidebar scrolling */
+@media (min-width:1100px) and (max-height:820px){
+  .sidebar{top:6px!important;padding:10px 13px 12px!important}
+  .brand-mini{margin-bottom:6px!important}
+  .toc-label{margin-bottom:3px!important}
+  .toc a{padding:4px 7px!important;min-height:25px!important;font-size:11px!important;line-height:1.2!important}
+  .instructor-sidebar-card{margin-top:6px!important;font-size:10px!important}
+  .instructor-sidebar-card img[width="83"]{width:52px!important;height:52px!important}
+  .instructor-sidebar-card .instructor-sns-row img{width:18px!important;height:18px!important}
+}
+
+/* Tablet / narrow laptop: use drawer so the fixed TOC never covers content */
+@media (min-width:821px) and (max-width:1099px){
+  .layout{display:block!important}
+  .sidebar{
+    position:fixed!important;
+    left:0!important;top:0!important;bottom:0!important;
+    width:min(84vw,320px)!important;
+    height:100vh!important;max-height:100vh!important;
+    padding:24px 18px!important;
+    overflow-y:auto!important;overflow-x:hidden!important;
+    transform:translateX(-105%)!important;
+    transition:.28s!important;
+    z-index:110!important;
+    border-radius:0!important;
+  }
+  .sidebar.open{transform:none!important}
+  .drawer-mask{display:block!important;position:fixed!important;inset:0!important;background:rgba(7,9,12,.55)!important;z-index:100!important;opacity:0!important;pointer-events:none!important;transition:.25s!important}
+  .drawer-mask.open{opacity:1!important;pointer-events:auto!important}
+  .main{padding:0 24px 90px!important;width:100%!important}
+  .toolbar{margin:0 -24px 24px!important;padding:11px 24px!important}
+  .mobile-toc-btn{display:block!important}
+}
+
+
+
+/* v8: scroll progress + current section title */
+.progress{position:fixed;inset:0 0 auto 0;height:5px;background:rgba(15,18,24,.08);z-index:220;pointer-events:none}
+.progress>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--red),#ff5a00);box-shadow:0 0 18px rgba(255,0,51,.48);transition:width .08s linear}
+.progress-current{position:fixed;top:13px;left:calc(var(--sidebar,310px) + 34px);right:28px;display:flex;align-items:center;gap:10px;width:max-content;max-width:calc(100vw - var(--sidebar,310px) - 74px);padding:8px 13px 9px 9px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:rgba(11,14,19,.88);box-shadow:0 10px 26px rgba(0,0,0,.18);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:#fff;opacity:0;transform:translateY(-8px);transition:opacity .22s ease,transform .22s ease;overflow:hidden}
+.progress-current.show{opacity:1;transform:translateY(0)}
+.progress-current-no{display:grid;place-items:center;flex:0 0 auto;min-width:31px;height:31px;padding:0 7px;border-radius:999px;background:linear-gradient(135deg,var(--red),#ff5a00);font-size:12px;font-weight:900;line-height:1;color:#fff;box-shadow:0 4px 12px rgba(255,0,51,.25)}
+.progress-current-title{display:block;min-width:0;max-width:620px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px;line-height:1.25;letter-spacing:-.02em;font-weight:800}
+@media (max-width:1180px){.progress-current{left:20px;right:20px;max-width:calc(100vw - 40px)}.progress-current-title{max-width:70vw}}
+@media (max-width:760px){.progress-current{top:10px;left:12px;right:12px;max-width:calc(100vw - 24px);padding:7px 11px 7px 7px;gap:8px}.progress-current-no{min-width:28px;height:28px;font-size:11px}.progress-current-title{font-size:13px;max-width:calc(100vw - 88px)}}
+
+
+/* v9: Desktop sidebar and main content are physically separated */
+@media (min-width:1100px){
+  :root{--sidebar-w:310px;--sidebar-gap:34px;--page-max:1600px}
+  .layout{
+    display:block!important;
+    max-width:none!important;
+    width:100%!important;
+    margin:0!important;
+    position:relative!important;
+    overflow:visible!important;
+  }
+  .sidebar{
+    position:fixed!important;
+    top:10px!important;
+    left:max(0px,calc((100vw - var(--page-max))/2))!important;
+    width:var(--sidebar-w)!important;
+    z-index:60!important;
+  }
+  .main{
+    display:block!important;
+    grid-column:auto!important;
+    width:auto!important;
+    max-width:calc(var(--page-max) - var(--sidebar-w) - var(--sidebar-gap))!important;
+    margin-left:max(calc(var(--sidebar-w) + var(--sidebar-gap)), calc((100vw - var(--page-max))/2 + var(--sidebar-w) + var(--sidebar-gap)))!important;
+    margin-right:max(20px,calc((100vw - var(--page-max))/2))!important;
+    padding-left:0!important;
+    padding-right:0!important;
+    min-width:0!important;
+    position:relative!important;
+    z-index:1!important;
+  }
+  .toolbar{
+    margin-left:0!important;
+    margin-right:0!important;
+    padding-left:22px!important;
+    padding-right:22px!important;
+    border-radius:0 0 16px 16px!important;
+  }
+  .lesson,.footer{max-width:100%!important}
+  .progress-current{
+    left:max(calc(var(--sidebar-w) + var(--sidebar-gap)), calc((100vw - var(--page-max))/2 + var(--sidebar-w) + var(--sidebar-gap)))!important;
+    max-width:calc(100vw - max(calc(var(--sidebar-w) + var(--sidebar-gap)), calc((100vw - var(--page-max))/2 + var(--sidebar-w) + var(--sidebar-gap))) - 28px)!important;
+  }
+}
+
+/* Extra breathing room on common desktop widths */
+@media (min-width:1100px) and (max-width:1360px){
+  :root{--sidebar-w:292px;--sidebar-gap:26px}
+  .sidebar{padding-left:13px!important;padding-right:13px!important}
+  .main{margin-right:18px!important}
+}
 </style>
 </head>
 <body>
-<div class="progress"><i></i></div>
+<div class="progress"><i></i><div aria-live="polite" class="progress-current" id="progressCurrent"><span class="progress-current-no" id="progressCurrentNo">01</span><strong class="progress-current-title" id="progressCurrentTitle">교육 안내</strong></div></div>
 <header class="hero" id="top">
 <div class="hero-inner">
 <div>
@@ -1063,7 +1230,7 @@ $$('.prompt-text').forEach(pre=>typeIO.observe(pre));
 // scroll reveal
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.08});$$('.reveal').forEach(el=>io.observe(el));
 // progress + top
-const topBtn=$('#topBtn'), progress=$('.progress i');
+const topBtn=$('#topBtn'), progress=$('.progress i'), progressCurrent=$('#progressCurrent'), progressCurrentNo=$('#progressCurrentNo'), progressCurrentTitle=$('#progressCurrentTitle');
 let scrollTicking=false;
 function onScroll(){
   if(scrollTicking) return;
@@ -1084,7 +1251,33 @@ window.visualViewport?.addEventListener('resize',onScroll,{passive:true});
 onScroll();
 topBtn.onclick=()=>window.scrollTo({top:0,left:0,behavior:'smooth'});
 // toc active
-function updateToc(){let active=null; const targets=$$('.toc a').map(a=>document.getElementById(a.dataset.target));for(const el of targets){if(el && el.getBoundingClientRect().top<170) active=el.id}$$('.toc a').forEach(a=>a.classList.toggle('active',a.dataset.target===active))}
+function getCurrentLesson(){
+  const lessons=$$('.lesson:not(.hidden)');
+  if(!lessons.length) return null;
+  const anchor=Math.min(220,Math.max(110,(window.visualViewport?.height||window.innerHeight||700)*0.24));
+  let current=lessons[0];
+  for(const el of lessons){
+    const r=el.getBoundingClientRect();
+    if(r.top<=anchor) current=el;
+    if(r.top>anchor) break;
+  }
+  return current;
+}
+function updateToc(){
+  const current=getCurrentLesson();
+  const active=current?.id||null;
+  $$('.toc a').forEach(a=>a.classList.toggle('active',a.dataset.target===active));
+  if(current && progressCurrent){
+    const h=current.querySelector('h2');
+    const n=current.querySelector('.lesson-no');
+    progressCurrentNo.textContent=(n?.textContent||'').trim()||'•';
+    progressCurrentTitle.textContent=(h?.textContent||'현재 학습 내용').trim();
+    const y=window.scrollY||document.documentElement.scrollTop||0;
+    progressCurrent.classList.toggle('show',y>Math.max(280,(document.querySelector('.hero')?.offsetHeight||0)-80));
+  }else if(progressCurrent){
+    progressCurrent.classList.remove('show');
+  }
+}
 // mobile drawer
 const sidebar=$('#sidebar'), mask=$('#drawerMask');
 function closeDrawer(){
