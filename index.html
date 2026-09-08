@@ -480,6 +480,53 @@ body.drawer-open{
     z-index:1!important;
   }
 }
+
+/* v13: 본문 스크롤 중 왼쪽 간단목차 상시 고정 */
+@media (min-width:1200px){
+  .sidebar,
+  #sidebar,
+  .left-sidebar{
+    position:fixed !important;
+    top:82px !important;
+    left:18px !important;
+    width:310px !important;
+    max-height:calc(100vh - 100px) !important;
+    z-index:80 !important;
+    overflow:hidden !important;
+    margin:0 !important;
+    transform:none !important;
+  }
+  .sidebar .toc-scroll,
+  #sidebar .toc-scroll,
+  .left-sidebar .toc-scroll,
+  .sidebar nav,
+  #sidebar nav,
+  .left-sidebar nav{
+    max-height:42vh !important;
+    overflow-y:auto !important;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+  }
+  main,
+  .main,
+  .content,
+  .main-content,
+  #main-content{
+    margin-left:346px !important;
+    width:auto !important;
+    max-width:none !important;
+  }
+  .current-section-indicator,
+  #currentSectionIndicator{
+    left:346px !important;
+  }
+}
+
+/* v14: 메인 타이틀 영역에서는 사이드바 숨김, 본문 진입 후 고정 */
+@media (min-width: 1200px){
+  .sidebar{opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .22s ease, transform .22s ease;}
+  body.sidebar-active .sidebar{opacity:1;pointer-events:auto;transform:none;}
+}
 </style>
 </head>
 <body>
@@ -1581,4 +1628,62 @@ $$('.sample-copy').forEach(btn=>btn.addEventListener('click',async()=>{
   const old=btn.textContent; btn.textContent='✓ 샘플 복사 완료';btn.classList.add('copied');showToast('샘플 예시를 복사했습니다.');setTimeout(()=>{btn.textContent=old;btn.classList.remove('copied')},1500);
 }));
 </script>
-</body></html>
+<script>
+(function(){
+  const candidates=['.sidebar','#sidebar','.left-sidebar'];
+  const sidebar=candidates.map(s=>document.querySelector(s)).find(Boolean);
+  if(!sidebar) return;
+  const main=document.querySelector('main,.main-content,#main-content,.content,.main');
+  function updateSidebar(){
+    if(window.innerWidth<1200){
+      sidebar.style.removeProperty('position');
+      sidebar.style.removeProperty('top');
+      sidebar.style.removeProperty('left');
+      sidebar.classList.remove('sidebar-fixed-v13');
+      return;
+    }
+    const start=main ? main.getBoundingClientRect().top + window.scrollY : 0;
+    const y=window.scrollY;
+    if(y >= Math.max(0,start-82)){
+      sidebar.classList.add('sidebar-fixed-v13');
+      sidebar.style.position='fixed';
+      sidebar.style.top='82px';
+      sidebar.style.left='18px';
+    }else{
+      sidebar.classList.remove('sidebar-fixed-v13');
+      sidebar.style.position='absolute';
+      sidebar.style.top=start+'px';
+      sidebar.style.left='18px';
+    }
+  }
+  window.addEventListener('scroll', updateSidebar, {passive:true});
+  window.addEventListener('resize', updateSidebar);
+  updateSidebar();
+})();
+</script>
+<script>
+(function(){
+  const sidebar=document.querySelector('.sidebar');
+  if(!sidebar) return;
+  const main=document.querySelector('main') || document.querySelector('.main') || document.querySelector('.content');
+  const firstLesson=document.querySelector('section.lesson');
+  const trigger=firstLesson || main;
+  if(!trigger) return;
+  function updateSidebar(){
+    if(window.innerWidth < 1200){
+      document.body.classList.remove('sidebar-active');
+      return;
+    }
+    const rect=trigger.getBoundingClientRect();
+    const threshold=90;
+    if(rect.top <= threshold){
+      document.body.classList.add('sidebar-active');
+    } else {
+      document.body.classList.remove('sidebar-active');
+    }
+  }
+  updateSidebar();
+  window.addEventListener('scroll', updateSidebar, {passive:true});
+  window.addEventListener('resize', updateSidebar);
+})();
+</script></body></html>
