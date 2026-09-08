@@ -183,6 +183,44 @@ body.drawer-open{
 .instructor-sns-row a{display:inline-flex;align-items:center;justify-content:center;border-radius:7px}
 .instructor-sns-row img{display:block;border-radius:5px}
 @media(max-width:820px){.instructor-sidebar-card{margin-top:16px}}
+
+
+/* v6: desktop TOC always visible, no sidebar inner scrolling */
+@media (min-width:821px){
+  .layout{
+    position:relative;
+    overflow:visible!important;
+  }
+  .sidebar{
+    position:fixed!important;
+    top:0!important;
+    left:max(0px, calc((100vw - 1480px)/2))!important;
+    bottom:auto!important;
+    width:var(--sidebar)!important;
+    height:auto!important;
+    max-height:none!important;
+    overflow:visible!important;
+    overflow-x:visible!important;
+    overflow-y:visible!important;
+    overscroll-behavior:auto!important;
+    scrollbar-width:none!important;
+    -ms-overflow-style:none!important;
+  }
+  .sidebar::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}
+  .toc{
+    overflow:visible!important;
+    max-height:none!important;
+  }
+  .main{grid-column:2;min-width:0}
+}
+/* compact fixed sidebar on shorter desktop screens without adding a scrollbar */
+@media (min-width:821px) and (max-height:900px){
+  .sidebar{padding-top:18px!important;padding-bottom:12px!important}
+  .brand-mini{margin-bottom:13px!important}
+  .toc a{padding:7px 10px!important;margin:1px 0!important;font-size:12px!important;line-height:1.35!important}
+  .sidebar-note{margin-top:11px!important;padding:10px!important;font-size:10.5px!important;line-height:1.45!important}
+  .instructor-sidebar-card{margin-top:10px!important;transform:scale(.86);transform-origin:top center;width:116.3%!important;margin-left:-8.15%!important}
+}
 </style>
 </head>
 <body>
