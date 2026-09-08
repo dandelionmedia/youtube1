@@ -527,6 +527,169 @@ body.drawer-open{
   .sidebar{opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .22s ease, transform .22s ease;}
   body.sidebar-active .sidebar{opacity:1;pointer-events:auto;transform:none;}
 }
+
+/* v15: 본문 폭 확장 + 사이드바와 안전 여백 유지 */
+@media (min-width:1361px){
+  .layout{max-width:1760px;grid-template-columns:300px minmax(0,1fr);column-gap:0;margin:0 auto}
+  .main{padding:0 24px 100px 34px;min-width:0}
+  .toolbar{margin:0 -24px 30px -34px;padding:14px 24px 14px 34px}
+  .lesson{max-width:1320px;padding:42px 48px;margin-left:auto;margin-right:auto}
+}
+@media (min-width:1180px) and (max-width:1360px){
+  .layout{max-width:100%;grid-template-columns:280px minmax(0,1fr)}
+  .main{padding:0 20px 90px 28px}
+  .toolbar{margin:0 -20px 30px -28px;padding:14px 20px 14px 28px}
+  .lesson{max-width:none;width:100%;padding:38px 38px}
+}
+
+
+/* ===== v16: 첨부 화면 기준 본문 와이드 확장 + 메인 타이틀 모션 ===== */
+@media (min-width:1200px){
+  :root{--v16-sidebar:310px;--v16-gap:28px;--v16-edge:22px}
+  .layout{
+    display:block!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:0!important;
+    position:relative!important;
+    overflow:visible!important;
+  }
+  .sidebar,
+  #sidebar{
+    position:fixed!important;
+    left:var(--v16-edge)!important;
+    top:82px!important;
+    width:var(--v16-sidebar)!important;
+    max-height:calc(100vh - 100px)!important;
+    margin:0!important;
+    z-index:80!important;
+  }
+  .main{
+    display:block!important;
+    width:calc(100vw - var(--v16-sidebar) - var(--v16-gap) - (var(--v16-edge) * 2))!important;
+    max-width:none!important;
+    margin-left:calc(var(--v16-sidebar) + var(--v16-gap) + var(--v16-edge))!important;
+    margin-right:var(--v16-edge)!important;
+    padding:0 0 100px!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+  }
+  .toolbar{
+    width:100%!important;
+    margin:0 0 28px!important;
+    padding:14px 20px!important;
+    box-sizing:border-box!important;
+    border-radius:0 0 18px 18px!important;
+  }
+  .lesson,
+  .footer{
+    width:100%!important;
+    max-width:none!important;
+    margin-left:0!important;
+    margin-right:0!important;
+    box-sizing:border-box!important;
+  }
+  .lesson{padding:42px clamp(38px,3.2vw,64px)!important}
+  .progress-current,
+  #currentSectionIndicator{
+    left:calc(var(--v16-sidebar) + var(--v16-gap) + var(--v16-edge))!important;
+    right:var(--v16-edge)!important;
+    max-width:none!important;
+  }
+}
+@media (min-width:1200px) and (max-width:1450px){
+  :root{--v16-sidebar:288px;--v16-gap:22px;--v16-edge:16px}
+  .lesson{padding:38px 34px!important}
+}
+
+/* Hero entrance motion */
+.hero{isolation:isolate}
+.hero:after{
+  content:'';position:absolute;inset:-25% -10%;pointer-events:none;z-index:0;
+  background:radial-gradient(circle at 76% 28%,rgba(255,49,83,.18),transparent 24%),radial-gradient(circle at 22% 68%,rgba(52,112,255,.13),transparent 28%);
+  filter:blur(10px);animation:heroGlowDrift 9s ease-in-out infinite alternate;
+}
+.hero-inner{z-index:1}
+.hero .eyebrow,.hero h1,.hero .hero-sub,.hero .hero-meta,.hero .creator-card{opacity:0;will-change:transform,opacity}
+.hero .eyebrow{animation:heroFadeUp .65s cubic-bezier(.2,.75,.25,1) .08s forwards}
+.hero h1{animation:heroTitleIn .9s cubic-bezier(.16,.84,.28,1) .2s forwards}
+.hero .hero-sub{animation:heroFadeUp .72s cubic-bezier(.2,.75,.25,1) .48s forwards}
+.hero .hero-meta{animation:heroFadeUp .72s cubic-bezier(.2,.75,.25,1) .64s forwards}
+.hero .creator-card{animation:heroCardIn .95s cubic-bezier(.16,.84,.28,1) .34s forwards}
+.hero .chip{transition:transform .22s ease,background .22s ease,border-color .22s ease}
+.hero .chip:hover{transform:translateY(-3px);background:#252d39;border-color:#465163}
+.hero .play{animation:heroPlayFloat 3.4s ease-in-out 1.4s infinite}
+.hero h1 em:after{transform-origin:left center;animation:heroUnderline .75s cubic-bezier(.2,.8,.25,1) .86s both}
+@keyframes heroFadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes heroTitleIn{from{opacity:0;transform:translateY(36px) scale(.985);filter:blur(7px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes heroCardIn{from{opacity:0;transform:translateX(42px) translateY(14px) rotate(1deg);filter:blur(5px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes heroUnderline{from{scale:.05 1;opacity:.2}to{scale:1 1;opacity:1}}
+@keyframes heroPlayFloat{0%,100%{transform:rotate(-2deg) translateY(0)}50%{transform:rotate(1deg) translateY(-8px)}}
+@keyframes heroGlowDrift{from{transform:translate3d(-1.5%,0,0) scale(1)}to{transform:translate3d(2%,1.5%,0) scale(1.05)}}
+@media(max-width:819px){
+  .hero .creator-card{animation-name:heroFadeUp}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero .eyebrow,.hero h1,.hero .hero-sub,.hero .hero-meta,.hero .creator-card{opacity:1!important;transform:none!important;filter:none!important;animation:none!important}
+  .hero:after,.hero .play,.hero h1 em:after{animation:none!important}
+}
+
+
+/* === FINAL FIX: 간단목차 가로 스크롤바 완전 제거 === */
+@media (min-width: 1101px) {
+  .sidebar,
+  .sidebar-inner,
+  .sidebar nav,
+  .sidebar .toc,
+  .sidebar .toc-wrap {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 세로 스크롤만 허용 */
+  .sidebar {
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+
+  .sidebar nav,
+  .sidebar .toc {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .sidebar .toc a,
+  .sidebar nav a {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transform: none !important;
+  }
+
+  .sidebar .toc a:hover,
+  .sidebar .toc a.active,
+  .sidebar nav a:hover,
+  .sidebar nav a.active {
+    transform: none !important;
+  }
+
+  /* 내부 카드/이미지가 사이드바 폭을 넘지 않도록 */
+  .sidebar img,
+  .sidebar table,
+  .sidebar div,
+  .sidebar section,
+  .sidebar article {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
 </style>
 </head>
 <body>
