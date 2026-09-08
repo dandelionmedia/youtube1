@@ -759,10 +759,112 @@ body.drawer-open{
     border-radius: 999px;
   }
 }
+
+/* ===== FINAL v17: 사이드바 전체 스크롤 + 현재 위치 제목을 간단목차 위로 이동 ===== */
+@media (min-width: 1200px){
+  .sidebar,
+  #sidebar{
+    top:82px!important;
+    height:calc(100vh - 98px)!important;
+    max-height:none!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-gutter:stable;
+    scrollbar-width:thin;
+    scrollbar-color:#aeb6c3 #eef1f5;
+    padding-right:14px!important;
+  }
+
+  .sidebar::-webkit-scrollbar,
+  #sidebar::-webkit-scrollbar{
+    width:10px!important;
+    height:0!important;
+  }
+  .sidebar::-webkit-scrollbar-track,
+  #sidebar::-webkit-scrollbar-track{
+    background:#eef1f5;
+    border-radius:999px;
+  }
+  .sidebar::-webkit-scrollbar-thumb,
+  #sidebar::-webkit-scrollbar-thumb{
+    min-height:48px;
+    background:#aeb6c3;
+    border:2px solid #eef1f5;
+    border-radius:999px;
+  }
+  .sidebar::-webkit-scrollbar-thumb:hover,
+  #sidebar::-webkit-scrollbar-thumb:hover{background:#858f9f}
+
+  /* 기존 목차 내부의 별도 스크롤 제거 -> 사이드바 전체가 하나의 스크롤 영역 */
+  .sidebar .toc,
+  #sidebar .toc,
+  .sidebar nav,
+  #sidebar nav{
+    max-height:none!important;
+    height:auto!important;
+    overflow:visible!important;
+    padding-right:0!important;
+    scrollbar-width:none!important;
+  }
+  .sidebar .toc::-webkit-scrollbar,
+  #sidebar .toc::-webkit-scrollbar,
+  .sidebar nav::-webkit-scrollbar,
+  #sidebar nav::-webkit-scrollbar{display:none!important}
+
+  /* 현재 본문 위치 제목: 간단목차 바로 위에 표시 */
+  .progress-current.sidebar-current,
+  #progressCurrent.sidebar-current{
+    position:sticky!important;
+    top:-1px!important;
+    left:auto!important;
+    right:auto!important;
+    width:100%!important;
+    max-width:100%!important;
+    margin:0 0 14px!important;
+    padding:9px 10px!important;
+    z-index:5!important;
+    border:1px solid #e3e6eb!important;
+    border-radius:14px!important;
+    background:rgba(255,255,255,.97)!important;
+    color:#171a20!important;
+    box-shadow:0 8px 22px rgba(18,21,27,.08)!important;
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    opacity:0;
+    transform:translateY(-5px);
+    pointer-events:none;
+  }
+  .progress-current.sidebar-current.show,
+  #progressCurrent.sidebar-current.show{
+    opacity:1!important;
+    transform:none!important;
+  }
+  .progress-current.sidebar-current .progress-current-title{
+    color:#252932!important;
+    max-width:none!important;
+    font-size:13px!important;
+  }
+}
+
+/* 모바일에서는 기존 드로어 안에서 자연스럽게 표시 */
+@media (max-width:1199px){
+  .progress-current.sidebar-current,
+  #progressCurrent.sidebar-current{
+    position:static!important;
+    left:auto!important;right:auto!important;top:auto!important;
+    width:100%!important;max-width:100%!important;
+    margin:0 0 14px!important;
+    background:#11151c!important;
+    opacity:1!important;transform:none!important;
+  }
+}
+
 </style>
 </head>
 <body>
-<div class="progress"><i></i><div aria-live="polite" class="progress-current" id="progressCurrent"><span class="progress-current-no" id="progressCurrentNo">01</span><strong class="progress-current-title" id="progressCurrentTitle">교육 안내</strong></div></div>
+<div class="progress"><i></i></div>
 <header class="hero" id="top">
 <div class="hero-inner">
 <div>
@@ -783,6 +885,7 @@ body.drawer-open{
 <div class="layout">
 <aside class="sidebar" id="sidebar">
 <div class="brand-mini"><span class="brand-icon"></span><div><strong>AI 유튜브 크리에이터</strong><small>2차시 실습페이지</small></div></div>
+<div aria-live="polite" class="progress-current sidebar-current" id="progressCurrent"><span class="progress-current-no" id="progressCurrentNo">01</span><strong class="progress-current-title" id="progressCurrentTitle">교육 안내</strong></div>
 <div class="toc-label">간단 목차</div>
 <nav class="toc">
 <a data-target="section-1" href="#section-1"><span class="toc-num">01</span>교육 목표·결과물</a><a data-target="section-3" href="#section-3"><span class="toc-num">02</span>나의 주제·채널 기획</a><a data-target="section-5" href="#section-5"><span class="toc-num">03</span>채널 브랜딩</a><a data-target="section-11" href="#section-11"><span class="toc-num">04</span>첫 콘텐츠·썸네일</a><a data-target="section-12" href="#section-12"><span class="toc-num">05</span>숏폼·롱폼 기본기</a><a data-target="section-16" href="#section-16"><span class="toc-num">06</span>영상 문법·촬영</a><a data-target="section-19" href="#section-19"><span class="toc-num">07</span>AI 숏폼 제작 실습</a><a data-target="section-28" href="#section-28"><span class="toc-num">08</span>편집·운영·체크</a>
