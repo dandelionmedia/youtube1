@@ -388,6 +388,53 @@ body.drawer-open{
   .sidebar{padding-left:13px!important;padding-right:13px!important}
   .main{margin-right:18px!important}
 }
+
+
+/* v10: sidebar begins with the body content, not the hero, then stays visible while scrolling */
+@media (min-width:1100px){
+  :root{--sidebar-w:310px;--sidebar-gap:34px;--page-max:1600px}
+  .layout{
+    display:grid!important;
+    grid-template-columns:var(--sidebar-w) minmax(0,1fr)!important;
+    column-gap:var(--sidebar-gap)!important;
+    max-width:var(--page-max)!important;
+    width:100%!important;
+    margin:0 auto!important;
+    padding:0 18px!important;
+    box-sizing:border-box!important;
+    align-items:start!important;
+    position:relative!important;
+    overflow:visible!important;
+  }
+  .sidebar{
+    position:sticky!important;
+    top:10px!important;
+    left:auto!important;
+    right:auto!important;
+    bottom:auto!important;
+    width:100%!important;
+    margin:0!important;
+    align-self:start!important;
+    z-index:60!important;
+  }
+  .main{
+    grid-column:2!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+  }
+  .progress-current{
+    left:max(calc(18px + var(--sidebar-w) + var(--sidebar-gap)), calc((100vw - var(--page-max))/2 + 18px + var(--sidebar-w) + var(--sidebar-gap)))!important;
+    max-width:calc(100vw - max(calc(18px + var(--sidebar-w) + var(--sidebar-gap)), calc((100vw - var(--page-max))/2 + 18px + var(--sidebar-w) + var(--sidebar-gap))) - 28px)!important;
+  }
+}
+@media (min-width:1100px) and (max-width:1360px){
+  :root{--sidebar-w:292px;--sidebar-gap:26px}
+  .layout{padding-left:14px!important;padding-right:14px!important}
+}
+
 </style>
 </head>
 <body>
