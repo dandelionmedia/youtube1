@@ -862,6 +862,220 @@ body.drawer-open{
 }
 
 </style>
+
+<style id="final-v18-toc-scrollbar">
+/* ===== FINAL v18: 간단목차 자체 세로 스크롤바 항상 표시 ===== */
+@media (min-width: 1101px){
+  #sidebar .toc,
+  .sidebar .toc{
+    display:block !important;
+    width:100% !important;
+    height:auto !important;
+    max-height:42vh !important;
+    overflow-y:scroll !important;
+    overflow-x:hidden !important;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-gutter:stable;
+    scrollbar-width:auto !important;
+    scrollbar-color:#9aa4b2 #eef1f5 !important;
+    padding-right:8px !important;
+  }
+
+  #sidebar .toc::-webkit-scrollbar,
+  .sidebar .toc::-webkit-scrollbar{
+    display:block !important;
+    width:10px !important;
+    height:0 !important;
+  }
+
+  #sidebar .toc::-webkit-scrollbar-track,
+  .sidebar .toc::-webkit-scrollbar-track{
+    background:#eef1f5 !important;
+    border-radius:999px !important;
+  }
+
+  #sidebar .toc::-webkit-scrollbar-thumb,
+  .sidebar .toc::-webkit-scrollbar-thumb{
+    background:#9aa4b2 !important;
+    border:2px solid #eef1f5 !important;
+    border-radius:999px !important;
+    min-height:48px !important;
+  }
+
+  #sidebar .toc::-webkit-scrollbar-thumb:hover,
+  .sidebar .toc::-webkit-scrollbar-thumb:hover{
+    background:#737f90 !important;
+  }
+}
+</style>
+
+
+<style id="final-v19-current-position">
+/* ===== FINAL v19: 현재 위치 제목 버튼을 간단목차 바로 위에 고정 배치 ===== */
+@media (min-width: 821px){
+  #progressCurrent.sidebar-current,
+  .progress-current.sidebar-current{
+    position:static !important;
+    top:auto !important;
+    left:auto !important;
+    right:auto !important;
+    width:100% !important;
+    max-width:100% !important;
+    margin:0 0 16px 0 !important;
+    padding:12px 14px !important;
+    min-height:58px !important;
+    display:flex !important;
+    align-items:center !important;
+    gap:12px !important;
+    border:1px solid #e1e4e9 !important;
+    border-radius:18px !important;
+    background:#fff !important;
+    box-shadow:0 8px 24px rgba(18,21,27,.08) !important;
+    z-index:auto !important;
+    pointer-events:none !important;
+  }
+
+  #progressCurrent.sidebar-current.show,
+  .progress-current.sidebar-current.show{
+    opacity:1 !important;
+    visibility:visible !important;
+    transform:none !important;
+  }
+
+  /* 아직 본문 스크롤 전에도 이 자리에 표시되게 함 */
+  #progressCurrent.sidebar-current:not(.show),
+  .progress-current.sidebar-current:not(.show){
+    opacity:1 !important;
+    visibility:visible !important;
+    transform:none !important;
+  }
+
+  #progressCurrentNo{
+    flex:0 0 42px !important;
+    width:42px !important;
+    height:42px !important;
+    display:grid !important;
+    place-items:center !important;
+    border-radius:50% !important;
+    background:linear-gradient(135deg,#ef3340,#d9002b) !important;
+    color:#fff !important;
+    font-size:13px !important;
+    font-weight:900 !important;
+    line-height:1 !important;
+    box-shadow:0 6px 14px rgba(220,0,43,.22) !important;
+  }
+
+  #progressCurrentTitle{
+    min-width:0 !important;
+    flex:1 1 auto !important;
+    color:#252932 !important;
+    font-size:14px !important;
+    font-weight:900 !important;
+    line-height:1.35 !important;
+    white-space:normal !important;
+    overflow:visible !important;
+    text-overflow:clip !important;
+  }
+
+  #sidebar .toc-label,
+  .sidebar .toc-label{
+    margin-top:0 !important;
+  }
+}
+</style>
+
+
+<style id="final-v20-sidebar-scroll-area">
+/* ===== FINAL v20: 간단목차부터 김유성 강사 소개카드까지 하나의 세로 스크롤 영역 ===== */
+@media (min-width: 821px){
+  #sidebar.sidebar,
+  .sidebar{
+    display:flex !important;
+    flex-direction:column !important;
+    overflow:hidden !important;
+  }
+
+  #sidebar .brand-mini,
+  #sidebar #progressCurrent{
+    flex:0 0 auto !important;
+  }
+
+  #sidebar .sidebar-scroll-area,
+  .sidebar .sidebar-scroll-area{
+    flex:1 1 auto !important;
+    min-height:0 !important;
+    width:100% !important;
+    overflow-y:scroll !important;
+    overflow-x:hidden !important;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-gutter:stable;
+    scrollbar-width:auto !important;
+    scrollbar-color:#9aa4b2 #eef1f5 !important;
+    padding-right:8px !important;
+    padding-bottom:12px !important;
+    box-sizing:border-box !important;
+  }
+
+  #sidebar .sidebar-scroll-area::-webkit-scrollbar,
+  .sidebar .sidebar-scroll-area::-webkit-scrollbar{
+    display:block !important;
+    width:10px !important;
+    height:0 !important;
+  }
+
+  #sidebar .sidebar-scroll-area::-webkit-scrollbar-track,
+  .sidebar .sidebar-scroll-area::-webkit-scrollbar-track{
+    background:#eef1f5 !important;
+    border-radius:999px !important;
+  }
+
+  #sidebar .sidebar-scroll-area::-webkit-scrollbar-thumb,
+  .sidebar .sidebar-scroll-area::-webkit-scrollbar-thumb{
+    min-height:52px !important;
+    background:#9aa4b2 !important;
+    border:2px solid #eef1f5 !important;
+    border-radius:999px !important;
+  }
+
+  #sidebar .sidebar-scroll-area::-webkit-scrollbar-thumb:hover,
+  .sidebar .sidebar-scroll-area::-webkit-scrollbar-thumb:hover{
+    background:#737f90 !important;
+  }
+
+  /* v18의 목차 단독 스크롤을 해제하고, 상위 스크롤 영역으로 통합 */
+  #sidebar .toc,
+  .sidebar .toc{
+    display:block !important;
+    width:100% !important;
+    max-height:none !important;
+    height:auto !important;
+    overflow:visible !important;
+    padding-right:0 !important;
+    scrollbar-width:none !important;
+  }
+  #sidebar .toc::-webkit-scrollbar,
+  .sidebar .toc::-webkit-scrollbar{
+    display:none !important;
+    width:0 !important;
+  }
+
+  #sidebar .sidebar-note,
+  #sidebar .instructor-sidebar-card{
+    flex:none !important;
+  }
+}
+
+@media (max-width:820px){
+  #sidebar .sidebar-scroll-area,
+  .sidebar .sidebar-scroll-area{
+    overflow:visible !important;
+    padding-right:0 !important;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="progress"><i></i></div>
@@ -886,6 +1100,7 @@ body.drawer-open{
 <aside class="sidebar" id="sidebar">
 <div class="brand-mini"><span class="brand-icon"></span><div><strong>AI 유튜브 크리에이터</strong><small>2차시 실습페이지</small></div></div>
 <div aria-live="polite" class="progress-current sidebar-current" id="progressCurrent"><span class="progress-current-no" id="progressCurrentNo">01</span><strong class="progress-current-title" id="progressCurrentTitle">교육 안내</strong></div>
+<div class="sidebar-scroll-area">
 <div class="toc-label">간단 목차</div>
 <nav class="toc">
 <a data-target="section-1" href="#section-1"><span class="toc-num">01</span>교육 목표·결과물</a><a data-target="section-3" href="#section-3"><span class="toc-num">02</span>나의 주제·채널 기획</a><a data-target="section-5" href="#section-5"><span class="toc-num">03</span>채널 브랜딩</a><a data-target="section-11" href="#section-11"><span class="toc-num">04</span>첫 콘텐츠·썸네일</a><a data-target="section-12" href="#section-12"><span class="toc-num">05</span>숏폼·롱폼 기본기</a><a data-target="section-16" href="#section-16"><span class="toc-num">06</span>영상 문법·촬영</a><a data-target="section-19" href="#section-19"><span class="toc-num">07</span>AI 숏폼 제작 실습</a><a data-target="section-28" href="#section-28"><span class="toc-num">08</span>편집·운영·체크</a>
@@ -928,7 +1143,9 @@ body.drawer-open{
 <a aria-label="카카오톡 오픈채팅" href="https://open.kakao.com/o/gLAE28ui" rel="noreferrer noopener" target="_blank"><img alt="카카오톡" height="24" loading="lazy" src="https://cdn.imweb.me/upload/S2017031458c7abc782f2d/ee583ebc6add0.png" width="24"/></a>
 </div>
 </div>
-</div></aside>
+</div>
+</div><!-- /.sidebar-scroll-area -->
+</aside>
 <main class="main">
 <div class="toolbar">
 <button class="mobile-toc-btn" id="mobileToc">☰ 목차</button>
